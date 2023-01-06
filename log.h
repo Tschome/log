@@ -55,7 +55,6 @@ typedef enum {
      ((category) == CLASS_CATEGORY_DEVICE_AUDIO_OUTPUT) || \
      ((category) == CLASS_CATEGORY_DEVICE_OUTPUT))
 
-struct AVOptionRanges;
 
 /**
  * @addtogroup lavu_log

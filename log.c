@@ -24,7 +24,6 @@
  * logging functions
  */
 
-
 #if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -218,13 +217,10 @@ static void colored_fputs(int level, int tint, const char *str)
     else                        local_use_color = use_color;
 
 #if 1
-
-	//测试
+	//test
 	use_color = 256;
 	local_use_color = 1;
 #endif
-
-
 
 #if defined(_WIN32) && HAVE_SETCONSOLETEXTATTRIBUTE && HAVE_GETSTDHANDLE
     if (con != INVALID_HANDLE_VALUE) {
@@ -284,14 +280,12 @@ static void format_line(void *name, int level, const char *fmt, va_list vl,
     bprint_init(part+2, 0, BPRINT_SIZE_AUTOMATIC);
     bprint_init(part+3, 0, 65536);
 
-    //if(type) type[0] = type[1] = CLASS_CATEGORY_NA + 16;
-    if(type) type[0] = type[1] = LOG_TRACE / 8;
+    if(type) type[0] = type[1] = CLASS_CATEGORY_NA + 16;
 
 	if (*print_prefix && name) {
 		bprintf(part+1, "[%s @ %s] ", (char *)name, "reserve");
-		//if (type) type[0] = ;
 	}
-    if (*print_prefix && (level > LOG_QUIET) /*&& (flags & LOG_PRINT_LEVEL)*/)
+    if (*print_prefix && (level > LOG_QUIET) && (flags & LOG_PRINT_LEVEL))
         bprintf(part+2, "[%s] ", get_level_str(level));
 
     vbprintf(part+3, fmt, vl);
@@ -398,16 +392,14 @@ void log_once(void *name, int initial_level, int subsequent_level, int *state, c
 
 void vlog(void *name, int level, const char *fmt, va_list vl)
 {
-	/*
-	printf("%s %d\n", __func__, __LINE__);
-    void (*log_callback)(int, const char*, va_list) = log_callback;
-	printf("%s %d\n", __func__, __LINE__);
-    if (log_callback)
-        log_callback(level, fmt, vl);
-	printf("%s %d\n", __func__, __LINE__);
-	*/
-	
-	log_default_callback(name, level, fmt, vl);
+#if 0
+    void (*log_callback)(void*, int, const char*, va_list) = log_callback;
+    if (log_callback){
+        log_callback(name, level, fmt, vl);
+    }
+#else
+    log_default_callback(name, level, fmt, vl);
+#endif
 }
 
 int log_get_level(void)

@@ -43,10 +43,8 @@
 
 static intptr_t max_alloc_size = ATOMIC_VAR_INIT(2147483647);
 
-
 #define atomic_load(object) \
     (*(object))
-
 #define atomic_load_explicit(object, order) \
     atomic_load(object)
 
@@ -54,8 +52,6 @@ static intptr_t max_alloc_size = ATOMIC_VAR_INIT(2147483647);
 
 #define printf_format(fmtpos, attrpos) __attribute__((__format__(__printf__, fmtpos, attrpos)))
 //#define printf_format(fmtpos, attrpos)
-
-
 
 /**
  * Convert a UTF-8 character (up to 4 bytes) to its 32-bit UCS-4 encoded form.
@@ -173,7 +169,6 @@ void *memdup(const void *p, size_t size);
  * @see av_free()
  */
 void freep(void *ptr);
-
 
 /**
  * Clip a signed integer value into the amin-amax range.
