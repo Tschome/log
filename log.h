@@ -18,43 +18,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef AVUTIL_LOG_H
-#define AVUTIL_LOG_H
+#ifndef __LOG_H__
+#define __LOG_H__
 
 #include <stdarg.h>
-#include "common.h"
-
-typedef enum {
-    CLASS_CATEGORY_NA = 0,
-    CLASS_CATEGORY_INPUT,
-    CLASS_CATEGORY_OUTPUT,
-    CLASS_CATEGORY_MUXER,
-    CLASS_CATEGORY_DEMUXER,
-    CLASS_CATEGORY_ENCODER,
-    CLASS_CATEGORY_DECODER,
-    CLASS_CATEGORY_FILTER,
-    CLASS_CATEGORY_BITSTREAM_FILTER,
-    CLASS_CATEGORY_SWSCALER,
-    CLASS_CATEGORY_SWRESAMPLER,
-    CLASS_CATEGORY_DEVICE_VIDEO_OUTPUT = 40,
-    CLASS_CATEGORY_DEVICE_VIDEO_INPUT,
-    CLASS_CATEGORY_DEVICE_AUDIO_OUTPUT,
-    CLASS_CATEGORY_DEVICE_AUDIO_INPUT,
-    CLASS_CATEGORY_DEVICE_OUTPUT,
-    CLASS_CATEGORY_DEVICE_INPUT,
-    CLASS_CATEGORY_NB  ///< not part of ABI/API
-}AVClassCategory;
-
-#define IS_INPUT_DEVICE(category) \
-    (((category) == CLASS_CATEGORY_DEVICE_VIDEO_INPUT) || \
-     ((category) == CLASS_CATEGORY_DEVICE_AUDIO_INPUT) || \
-     ((category) == CLASS_CATEGORY_DEVICE_INPUT))
-
-#define IS_OUTPUT_DEVICE(category) \
-    (((category) == CLASS_CATEGORY_DEVICE_VIDEO_OUTPUT) || \
-     ((category) == CLASS_CATEGORY_DEVICE_AUDIO_OUTPUT) || \
-     ((category) == CLASS_CATEGORY_DEVICE_OUTPUT))
-
 
 /**
  * @addtogroup lavu_log
@@ -131,6 +98,9 @@ typedef enum {
  */
 #define LOG_C(x) ((x) << 8)
 
+#define printf_format(fmtpos, attrpos) __attribute__((__format__(__printf__, fmtpos, attrpos)))
+//#define printf_format(fmtpos, attrpos)
+
 /**
  * Send the specified message to the log if the level is less than or equal
  * to the current log_level. By default, all logging messages are sent to
@@ -167,7 +137,6 @@ void log(void *name, int level, const char *fmt, ...) printf_format(3, 4);
  *        must not be accessed by 2 Threads simultaneously.
  */
 void log_once(void *name, int initial_level, int subsequent_level, int *state, const char *fmt, ...) printf_format(5, 6);
-
 
 /**
  * Send the specified message to the log if the level is less than or equal
@@ -281,4 +250,4 @@ int log_get_flags(void);
  * @}
  */
 
-#endif /* AVUTIL_LOG_H */
+#endif /* __LOG_H__ */
